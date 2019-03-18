@@ -1,0 +1,15 @@
+﻿{
+  "Tasks": [
+    {
+      "TaskMethod": "Frends.VismaSign.VismaSign.DocumentCreate"
+    },{
+      "TaskMethod": "Frends.VismaSign.VismaSign.DocumentAddFile"
+    },   {
+      "TaskMethod": "Frends.VismaSign.VismaSign.DocumentAddInvitations"
+    },   {
+      "TaskMethod": "Frends.VismaSign.VismaSign.DocumentSearch"
+    },   {
+      "TaskMethod": "Frends.VismaSign.VismaSign.DocumentGet"
+    }
+  ]
+}

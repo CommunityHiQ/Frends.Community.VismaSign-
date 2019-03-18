@@ -84,6 +84,7 @@ namespace Frends.Community.VismaSign
     public class ConnectionOption
     {
         public string Identifier { get; set; }
+		[PasswordPropertyText]
         public string Secret { get; set; }
         public string BaseAddress { get; set; }
         /// <summary>

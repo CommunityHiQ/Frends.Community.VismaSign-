@@ -30,5 +30,26 @@ namespace Frends.Community.VismaSign.Test
 
             Assert.StartsWith("https://sign.visma.net/api/v1/document/", result.Location);
         }
+
+        [Fact]
+        public async Task ShouldSearchDocuments()
+        {
+
+            var settings = new DocumentSearchInput()
+            {
+                Query = "status=signed"
+            };
+
+            var options = new ConnectionOption
+            {
+                Identifier = Identifier,
+                Secret = Secret,
+                BaseAddress = BaseAddress
+            };
+
+            HttpResponseWithBody result = await (dynamic)VismaSign.DocumentSearch(settings, options, new CancellationToken());
+
+            Assert.StartsWith("{\"total\":", result.Body);
+        }
     }
 }

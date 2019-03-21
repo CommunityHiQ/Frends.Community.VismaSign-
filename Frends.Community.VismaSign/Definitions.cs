@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 #pragma warning disable 1591
@@ -83,9 +84,12 @@ namespace Frends.Community.VismaSign
 
     public class ConnectionOption
     {
+        [DisplayFormat(DataFormatString = "Expression")]
         public string Identifier { get; set; }
 		[PasswordPropertyText]
+        [DisplayFormat(DataFormatString = "Expression")]
         public string Secret { get; set; }
+        [DisplayFormat(DataFormatString = "Expression")]
         public string BaseAddress { get; set; }
         /// <summary>
         /// Throw exception if return code of request is not successful

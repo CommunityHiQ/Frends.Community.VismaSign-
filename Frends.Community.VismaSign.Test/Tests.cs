@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -50,6 +51,27 @@ namespace Frends.Community.VismaSign.Test
             HttpResponseWithBody result = await (dynamic)VismaSign.DocumentSearch(settings, options, new CancellationToken());
 
             Assert.StartsWith("{\"total\":", result.Body);
+        }
+
+        [Fact]
+        public async Task ShouldGetDocument()
+        {
+            var settings = new DocumentGetInput()
+            {
+                DocumentUriId = "26903d3f-6724-4f53-b5aa-ba3f761a7023",
+                Passphrase = "qbMg4bGz"
+            };
+
+            var options = new ConnectionOption
+            {
+                Identifier = Identifier,
+                Secret = Secret,
+                BaseAddress = BaseAddress
+            };
+
+            HttpResponseWithByteArrayBody result = await (dynamic)VismaSign.DocumentGet(settings, options, new CancellationToken());
+
+            Assert.Equal(200, result.StatusCode);
         }
     }
 }

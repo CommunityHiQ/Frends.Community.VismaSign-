@@ -76,10 +76,16 @@ namespace Frends.Community.VismaSign
     public class DocumentGetInput
     {
         /// <summary>
-        ///  Uri id of the document 
+        ///  Uri id  of the document invitation 
         /// </summary>
         [DisplayFormat(DataFormatString = "Text")]
         public dynamic DocumentUriId { get; set; }
+
+        /// <summary>
+        ///  Passphrase of the document invitation 
+        /// </summary>
+        [DisplayFormat(DataFormatString = "Text")]
+        public dynamic Passphrase { get; set; }
     }
 
     public class ConnectionOption
@@ -106,6 +112,13 @@ namespace Frends.Community.VismaSign
     public class HttpResponseWithBody
     {
         public string Body { get; set; }
+        public Dictionary<string, string> Headers { get; set; }
+        public int StatusCode { get; set; }
+    }
+
+    public class HttpResponseWithByteArrayBody
+    {
+        public byte[] Body { get; set; }
         public Dictionary<string, string> Headers { get; set; }
         public int StatusCode { get; set; }
     }

@@ -190,6 +190,29 @@ Get document. See https://sign.visma.net/api/docs/v1/#action-document-get-file
 | Property        | Type                          | Description                  | Example                  |
 |-----------------|-------------------------------|------------------------------|--------------------------|
 | DocumentUriId   | string						  | Document uri		         | `e59c8dc8-8848-4936-ac7c-50d9ed72085a`        |
+| Passphrase	  | string						  | Passphrase can be left empty | `VGy7KTxt`        |
+
+
+#### Options
+
+| Property              | Type           	| Description                                    |
+|-----------------------|-------------------|------------------------------------------------|
+| Identifier    		| string           	| Client identifier |
+| Secret     			| string           	| Client secret 	|
+| BaseAddress   		| string           	| Base address		|
+| ThrowExceptionOnErrorResponse	| bool           	| Throws error if request failed		|
+
+#### Result
+
+| Property          | Type                      | Description             |
+|-------------------|---------------------------|-------------------------|
+| Body              | string                    | Response body as string |
+| Headers           | Dictionary<string,string> | Response headers        |
+| StatusCode        | int                       | Response status code    | 
+
+### VismaSign.CategoriesGet
+
+Search document. See https://sign.visma.net/api/docs/v1/#get-categories
 
 #### Options
 

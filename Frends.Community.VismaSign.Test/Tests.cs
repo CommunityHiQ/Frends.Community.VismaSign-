@@ -7,8 +7,8 @@ namespace Frends.Community.VismaSign.Test
 {
     public class Tests
     {
-        private const string Identifier = "fill me";
-        private const string Secret = "fill me";
+        private const string Identifier = "";
+        private const string Secret = "";
         private const string BaseAddress = "https://sign.visma.net";
 
         [Fact]
@@ -38,7 +38,7 @@ namespace Frends.Community.VismaSign.Test
 
             var settings = new DocumentSearchInput()
             {
-                Query = "status=signed"
+                Query = "status=cancelled"
             };
 
             var options = new ConnectionOption
@@ -58,8 +58,8 @@ namespace Frends.Community.VismaSign.Test
         {
             var settings = new DocumentGetInput()
             {
-                DocumentUriId = "26903d3f-6724-4f53-b5aa-ba3f761a7023",
-                Passphrase = "qbMg4bGz"
+                DocumentUriId = "38ca4a5c-5080-4b95-9486-4055f226ecbd",
+                Passphrase = ""
             };
 
             var options = new ConnectionOption
@@ -70,6 +70,21 @@ namespace Frends.Community.VismaSign.Test
             };
 
             HttpResponseWithByteArrayBody result = await (dynamic)VismaSign.DocumentGet(settings, options, new CancellationToken());
+
+            Assert.Equal(200, result.StatusCode);
+        }
+
+        [Fact]
+        public async Task ShouldGetCategory()
+        {
+            var options = new ConnectionOption
+            {
+                Identifier = Identifier,
+                Secret = Secret,
+                BaseAddress = BaseAddress
+            };
+
+            HttpResponseWithBody result = await (dynamic)VismaSign.CategoriesGet(options, new CancellationToken());
 
             Assert.Equal(200, result.StatusCode);
         }

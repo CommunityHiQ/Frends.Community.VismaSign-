@@ -202,14 +202,17 @@ namespace Frends.Community.VismaSign
         }
 
         /// <summary>
-        /// Get document using invitation. Use invitation uuid passphrase as parameters. See https://sign.visma.net/api/docs/v1/#action-document-get-file
+        /// Get document using invitation. Can be used with or without uuid passphrase as parameter. See https://sign.visma.net/api/docs/v1/#action-document-get-file
         /// </summary>
         /// <returns>Object with the following properties: Byte[] Body. Dictionary(string,string) Headers. int StatusCode</returns>
         public static async Task<object> DocumentGet([PropertyTab] DocumentGetInput input, [PropertyTab] ConnectionOption options, CancellationToken cancellationToken)
         {
+            var address = string.IsNullOrEmpty(input.Passphrase)
+                ? options.BaseAddress + "/api/v1/document/" + input.DocumentUriId + "/files/0"
+                : options.BaseAddress + "/api/v1/invitation/" + input.DocumentUriId + "/" + input.Passphrase + "/files/0";
             var request = await WithAuthHeaders(new HttpRequestMessage(
                     HttpMethod.Get,
-                    options.BaseAddress + "/api/v1/invitation/" + input.DocumentUriId + "/" + input.Passphrase + "/files/0"),
+                    address),
                 options);
 
             using (var client = new HttpClient())
@@ -219,6 +222,37 @@ namespace Frends.Community.VismaSign
                 var returnResponse = new HttpResponseWithByteArrayBody
                 {
                     Body = await response.Content.ReadAsByteArrayAsync(),
+                    StatusCode = (int)response.StatusCode,
+                    Headers = GetResponseHeaderDictionary(response.Headers, response.Content.Headers)
+                };
+
+                if (!response.IsSuccessStatusCode && options.ThrowExceptionOnErrorResponse)
+                {
+                    throw new WebException($"Request to '{request.RequestUri}' failed with status code {(int)response.StatusCode}. Response body: {returnResponse.Body}");
+                }
+
+                return returnResponse;
+            }
+        }
+
+        /// <summary>
+        /// Get category list. See https://sign.visma.net/api/docs/v1/#get-categories
+        /// </summary>
+        /// <returns>Object with the following properties: String Body. Dictionary(string,string) Headers. int StatusCode</returns>
+        public static async Task<object> CategoriesGet([PropertyTab] ConnectionOption options, CancellationToken cancellationToken)
+        {
+            var request = await WithAuthHeaders(new HttpRequestMessage(
+                    HttpMethod.Get,
+                    options.BaseAddress + "/api/v1/category/"),
+                options);
+
+            using (var client = new HttpClient())
+            {
+                var response = await client.SendAsync(request, cancellationToken);
+
+                var returnResponse = new HttpResponseWithBody
+                {
+                    Body = await response.Content.ReadAsStringAsync(),
                     StatusCode = (int)response.StatusCode,
                     Headers = GetResponseHeaderDictionary(response.Headers, response.Content.Headers)
                 };

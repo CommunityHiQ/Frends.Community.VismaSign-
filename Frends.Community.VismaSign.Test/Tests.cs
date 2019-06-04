@@ -7,8 +7,8 @@ namespace Frends.Community.VismaSign.Test
 {
     public class Tests
     {
-        private const string Identifier = "";
-        private const string Secret = "";
+        private const string Identifier = "fill me";
+        private const string Secret = "fill me";
         private const string BaseAddress = "https://sign.visma.net";
 
         [Fact]

@@ -202,7 +202,7 @@ namespace Frends.Community.VismaSign
         }
 
         /// <summary>
-        /// Get document using invitation. Can be used with or without uuid passphrase as parameter. See https://sign.visma.net/api/docs/v1/#action-document-get-file
+        /// Get document using uuid. Can be used with or without passphrase as parameter. See https://sign.visma.net/api/docs/v1/#action-document-get-file
         /// </summary>
         /// <returns>Object with the following properties: Byte[] Body. Dictionary(string,string) Headers. int StatusCode</returns>
         public static async Task<object> DocumentGet([PropertyTab] DocumentGetInput input, [PropertyTab] ConnectionOption options, CancellationToken cancellationToken)
@@ -222,6 +222,38 @@ namespace Frends.Community.VismaSign
                 var returnResponse = new HttpResponseWithByteArrayBody
                 {
                     Body = await response.Content.ReadAsByteArrayAsync(),
+                    StatusCode = (int)response.StatusCode,
+                    Headers = GetResponseHeaderDictionary(response.Headers, response.Content.Headers)
+                };
+
+                if (!response.IsSuccessStatusCode && options.ThrowExceptionOnErrorResponse)
+                {
+                    throw new WebException($"Request to '{request.RequestUri}' failed with status code {(int)response.StatusCode}. Response body: {returnResponse.Body}");
+                }
+
+                return returnResponse;
+            }
+        }
+
+        /// <summary>
+        /// Delete document using uuid. See https://sign.visma.net/api/docs/v1/#action-document-delete
+        /// </summary>
+        /// <returns>Object with the following properties: String Body. Dictionary(string,string) Headers. int StatusCode</returns>
+        public static async Task<object> DocumentDelete([PropertyTab] DocumentDeleteInput input, [PropertyTab] ConnectionOption options, CancellationToken cancellationToken)
+        {
+            var address = options.BaseAddress + "/api/v1/document/" + input.DocumentUriId;
+            var request = await WithAuthHeaders(new HttpRequestMessage(
+                    HttpMethod.Delete,
+                    address),
+                options);
+
+            using (var client = new HttpClient())
+            {
+                var response = await client.SendAsync(request, cancellationToken);
+
+                var returnResponse = new HttpResponseWithBody
+                {
+                    Body = await response.Content.ReadAsStringAsync(),
                     StatusCode = (int)response.StatusCode,
                     Headers = GetResponseHeaderDictionary(response.Headers, response.Content.Headers)
                 };

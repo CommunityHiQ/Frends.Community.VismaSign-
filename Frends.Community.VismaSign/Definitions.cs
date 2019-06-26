@@ -88,6 +88,15 @@ namespace Frends.Community.VismaSign
         public dynamic Passphrase { get; set; }
     }
 
+    public class DocumentDeleteInput
+    {
+        /// <summary>
+        ///  Uri id of the document uuid 
+        /// </summary>
+        [DisplayFormat(DataFormatString = "Text")]
+        public dynamic DocumentUriId { get; set; }
+    }
+
     public class ConnectionOption
     {
         [DisplayFormat(DataFormatString = "Expression")]
@@ -109,6 +118,7 @@ namespace Frends.Community.VismaSign
         public Dictionary<string, string> Headers { get; set; }
         public int StatusCode { get; set; }
     }
+
     public class HttpResponseWithBody
     {
         public string Body { get; set; }

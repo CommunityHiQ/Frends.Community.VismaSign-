@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net471</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.0.11</Version>
+    <Version>0.0.12</Version>
     <Authors>HiQ Finland</Authors>
     <Company>HiQ Finland</Company>
     <Description>FRENDS VismaSign tasks</Description>
@@ -13,6 +13,10 @@
     <DocumentationFile>obj\Debug\netstandard2.0\Frends.Community.VismaSign.xml</DocumentationFile>
     <OutputPath></OutputPath>
   </PropertyGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)'=='net471'">
+		<Reference Include="System.Net.Http" />
+	</ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />

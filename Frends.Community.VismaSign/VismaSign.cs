@@ -106,7 +106,7 @@ namespace Frends.Community.VismaSign
                 HttpMethod.Post,
                 options.BaseAddress + "/api/v1/document/" + input.DocumentUriId + "/files" +
                 (
-                    input.FileName != null ? "?filename=" + HttpUtility.UrlEncode(input.FileName) : ""
+                    input.FileName != null ? "?filename=" + WebUtility.UrlEncode(input.FileName) : ""
                 )
             );
 

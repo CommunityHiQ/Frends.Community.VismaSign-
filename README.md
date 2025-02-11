@@ -270,3 +270,8 @@ Search document. See https://sign.visma.net/api/docs/v1/#get-categories
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details
+
+## Changelog
+
+| Version | Changes                                                                                                                                                 |
+| 0.0.13  | Added support for .NET 6.0 and .NET8.0                                                                                                                  |
